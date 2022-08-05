@@ -1,4 +1,4 @@
-# Game of Life [![Build Status](https://dev.azure.com/nerada/GitHub_Public/_apis/build/status/Nerada.courses.win.game_of_life?branchName=master)](https://dev.azure.com/nerada/GitHub_Public/_build/latest?definitionId=22&branchName=master)
+# Game of Life [![Build Status](https://dev.azure.com/nerada/GitHub_Public/_apis/build/status/Nerada.katas.win.game_of_life?branchName=master)](https://dev.azure.com/nerada/GitHub_Public/_build/latest?definitionId=24&branchName=master)
 Practicing coding with the team.
 
 ## Details
