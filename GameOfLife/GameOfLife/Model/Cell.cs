@@ -4,7 +4,9 @@
 // Created on: 20220805
 // -----------------------------------------------
 
-using System.Windows;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GameOfLife.Model;
 
@@ -12,19 +14,45 @@ public class Cell
 {
     public enum State
     {
+        Unknown,
         Alive,
         Dead
     }
 
-    public Cell(Point location, State status)
+    private readonly List<Cell> _neighbors = new(8);
+
+    private State _nextState;
+
+    public Cell(Location location, State status)
     {
         Location = location;
         Status   = status;
     }
 
+    public Location Location { get; }
+
     public State Status { get; private set; }
 
-    public Point Location { get; }
+    public void MoveOn()
+    {
+        if (_nextState == State.Unknown) throw new InvalidOperationException();
 
-    public void ChangeStatus(State newStatus) => Status = newStatus;
+        Status     = _nextState;
+        _nextState = State.Unknown;
+    }
+
+    public void PrepareNextState() => _nextState = _neighbors.Count(n => n.Status == State.Alive) switch
+    {
+        < 2 => State.Dead,
+        > 3 => State.Dead,
+        3   => State.Alive,
+        _   => Status
+    };
+
+    public void SetNeighbors(IReadOnlyList<Cell> neighbors)
+    {
+        _neighbors.Clear();
+        _neighbors.AddRange(neighbors);
+        PrepareNextState();
+    }
 }
