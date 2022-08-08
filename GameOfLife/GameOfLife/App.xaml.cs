@@ -32,12 +32,12 @@ public partial class App
     private void OnStartup(object sender, StartupEventArgs e)
     {
         //https://conwaylife.com/patterns/2eceater.rle
-        Pattern pattern = new("2-engine Cordership", 41, 10, @"
+        Pattern pattern = new("2-engine Cordership", 41, 49, 10, @"
 19b2o$19b4o$19bob2o2$20bo$19b2o$19b3o$21bo$33b2o$33b2o7$36bo$35b2o$34b
 o3bo$35b2o2bo$40bo$37bobo$38bo$38bo$38b2o$38b2o3$13bo10bo$12b5o5bob2o
 11bo$11bo10bo3bo9bo$12b2o8b3obo9b2o$13b2o9b2o12bo$2o13bo21b3o$2o35b3o
 7$8b2o$8b2o11b2o$19b2o2bo$24bo3bo$18bo5bo3bo$19bo2b2o3bobo$20b3o5bo$
-28bo!");
+28bo!", "https://conwaylife.com/patterns/2enginecordership.rle");
 
         Map          newMap       = new(pattern);
         MapViewModel mapViewModel = new(newMap);

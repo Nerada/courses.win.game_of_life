@@ -31,11 +31,15 @@ public class Cell
 
     public Location Location { get; }
 
+    public bool Changed { get; private set; }
+
     public State Status { get; private set; }
 
     public void MoveOn()
     {
         if (_nextState == State.Unknown) throw new InvalidOperationException();
+
+        Changed = Status != _nextState;
 
         Status     = _nextState;
         _nextState = State.Unknown;

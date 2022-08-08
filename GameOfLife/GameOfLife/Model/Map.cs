@@ -20,14 +20,14 @@ public class Map
     {
         _cells = layout.Content.ToList();
 
-        PatternName = layout.Name;
+        Pattern = layout;
 
         foreach (Cell cell in _cells) { cell.SetNeighbors(CalculateNeighbors(cell.Location)); }
     }
 
     public IReadOnlyList<Cell> Cells => _cells;
 
-    public string PatternName { get; }
+    public Pattern Pattern { get; }
 
     public int Iteration { get; private set; }
 
