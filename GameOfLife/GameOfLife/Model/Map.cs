@@ -4,8 +4,10 @@
 // Created on: 20220806
 // -----------------------------------------------
 
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using GameOfLife.Extensions;
 
 namespace GameOfLife.Model;
@@ -36,15 +38,15 @@ public class Map
         amount.TimesAction(() =>
         {
             _cells.ForEach(c => c.MoveOn());
-            _cells.ForEach(c => c.PrepareNextState());
+            Parallel.ForEach(_cells, c => c.PrepareNextState());
         });
     }
 
     private IReadOnlyList<Cell> CalculateNeighbors(Location location)
     {
-        List<Cell> neighbors = new();
+        ConcurrentBag<Cell> neighbors = new();
 
-        for (int columnNeighbor = location.Column - 1; columnNeighbor <= location.Column + 1; columnNeighbor++)
+        Parallel.For(location.Column - 1, location.Column + 2, columnNeighbor =>
         {
             for (int rowNeighbor = location.Row - 1; rowNeighbor <= location.Row + 1; rowNeighbor++)
             {
@@ -54,9 +56,9 @@ public class Map
 
                 neighbors.Add(_cells.Single(m => m.Location.Column == boundLocation.column && m.Location.Row == boundLocation.row));
             }
-        }
+        });
 
-        return neighbors;
+        return neighbors.ToList();
     }
 
     private (int column, int row) BoundaryCheck(int column, int row)
