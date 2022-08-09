@@ -4,6 +4,7 @@
 // Created on: 20220805
 // -----------------------------------------------
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using GameOfLife.Model;
@@ -36,13 +37,15 @@ public partial class App
 o3bo$35b2o2bo$40bo$37bobo$38bo$38bo$38b2o$38b2o3$13bo10bo$12b5o5bob2o
 11bo$11bo10bo3bo9bo$12b2o8b3obo9b2o$13b2o9b2o12bo$2o13bo21b3o$2o35b3o
 7$8b2o$8b2o11b2o$19b2o2bo$24bo3bo$18bo5bo3bo$19bo2b2o3bobo$20b3o5bo$
-28bo!", "https://conwaylife.com/patterns/2enginecordership.rle");
+28bo!", new Uri("https://conwaylife.com/patterns/2enginecordership.rle"));
 
         Map          newMap       = new(pattern);
         MapViewModel mapViewModel = new(newMap);
 
-        MainWindow mainWindow = new();
-        mainWindow.DataContext = mapViewModel;
+        MainWindow mainWindow = new()
+        {
+            DataContext = mapViewModel
+        };
         mainWindow.Show();
     }
 }

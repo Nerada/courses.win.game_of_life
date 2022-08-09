@@ -14,7 +14,13 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding PatternName}" Margin="10, 0,10,0" />
+        <StackPanel Grid.Row="0">
+            <TextBlock Margin="10, 0,10,0">
+                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="{Binding PatternUri}">
+                    <Run Text="{Binding PatternName, Mode=OneWay}" />
+                </Hyperlink>
+            </TextBlock>
+        </StackPanel>
         <view:ViewerUserControl Grid.Row="1" DataContext="{Binding Mode=OneWay}" Margin="10" HorizontalAlignment="Left"
                                 VerticalAlignment="Top" />
         <StackPanel Grid.Row="2" Orientation="Horizontal">

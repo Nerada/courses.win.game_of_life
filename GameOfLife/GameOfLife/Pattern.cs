@@ -4,6 +4,7 @@
 // Created on: 20220807
 // -----------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using GameOfLife.Extensions;
 using GameOfLife.Model;
@@ -12,7 +13,7 @@ namespace GameOfLife;
 
 public class Pattern
 {
-    public Pattern(string name, int columns, int rows, int margin, string content, string source)
+    public Pattern(string name, int columns, int rows, int margin, string content, Uri source)
     {
         Info    = new MetaData(name, source);
         Content = content.ToMap(columns, margin);
@@ -28,5 +29,5 @@ public class Pattern
 
     public IReadOnlyList<Cell> Content { get; }
 
-    public record MetaData(string Name, string Url);
+    public record MetaData(string Name, Uri Url);
 }

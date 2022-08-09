@@ -40,6 +40,8 @@ public class MapViewModel : ViewModelBase
 
     public string PatternName => @$"{_map.Pattern.Info.Name} ({_map.Iteration})";
 
+    public Uri PatternUri => _map.Pattern.Info.Url;
+
     public ICommand IncreaseIteration { get; }
 
     public ICommand ToggleAutoRun { get; }
