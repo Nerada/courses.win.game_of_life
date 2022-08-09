@@ -5,6 +5,7 @@
 // -----------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -17,22 +18,26 @@ namespace GameOfLife.ViewModels;
 public class MapViewModel : ViewModelBase
 {
     private readonly DispatcherTimer _dispatcherTimer = new();
-    private readonly Map             _map;
+
+
+    private Map     _map;
+    private Pattern _currentPattern;
 
     public MapViewModel(Map map)
     {
-        _map              = map;
         IncreaseIteration = new DelegateCommand(Iterate);
         ToggleAutoRun     = new DelegateCommand(AutoRun);
 
-        Bitmap = new MapBitmap(_map.Pattern.Columns, _map.Pattern.Rows);
-        _map.Cells.ToList().ForEach(UpdatePixel);
+        _currentPattern = map.Pattern;
+
+        _map = map;
+        SetMap(map);
 
         _dispatcherTimer.Interval =  new TimeSpan(0, 0, 0, 0, 10);
         _dispatcherTimer.Tick     += (_, _) => Iterate();
     }
 
-    public MapBitmap Bitmap { get; }
+    public IReadOnlyList<Pattern> Patterns => PatternLib.Patterns.Values.ToList();
 
     public int Width => _map.Pattern.Columns * 5;
 
@@ -40,11 +45,36 @@ public class MapViewModel : ViewModelBase
 
     public string PatternName => @$"{_map.Pattern.Info.Name} ({_map.Iteration})";
 
-    public Uri PatternUri => _map.Pattern.Info.Url;
+    public Uri? PatternUri => _map.Pattern.Info.Url;
 
     public ICommand IncreaseIteration { get; }
 
     public ICommand ToggleAutoRun { get; }
+
+    public MapBitmap? Bitmap { get; private set; }
+
+    public Pattern CurrentPattern
+    {
+        get => _currentPattern;
+        set
+        {
+            if (!Set(ref _currentPattern, value)) return;
+
+            SetMap(new Map(CurrentPattern));
+
+            RaiseAllPropertyChanged();
+        }
+    }
+
+    private void SetMap(Map map)
+    {
+        _dispatcherTimer.Stop();
+
+        _map = map;
+
+        Bitmap = new MapBitmap(_map.Pattern.Columns, _map.Pattern.Rows);
+        _map.Cells.ToList().ForEach(UpdatePixel);
+    }
 
     private void AutoRun()
     {
@@ -61,5 +91,13 @@ public class MapViewModel : ViewModelBase
         RaisePropertyChanged(nameof(PatternName));
     }
 
-    private void UpdatePixel(Cell cell) => Bitmap.WritePixel(cell.Location, cell.Status == Cell.State.Alive ? Colors.OrangeRed : Colors.Gray);
+    private void UpdatePixel(Cell cell) => Bitmap?.WritePixel(cell.Location, cell.State == CellState.Alive ? Colors.OrangeRed : Colors.Gray);
+
+    private void RaiseAllPropertyChanged()
+    {
+        RaisePropertyChanged(nameof(PatternName));
+        RaisePropertyChanged(nameof(Bitmap));
+        RaisePropertyChanged(nameof(Width));
+        RaisePropertyChanged(nameof(Height));
+    }
 }

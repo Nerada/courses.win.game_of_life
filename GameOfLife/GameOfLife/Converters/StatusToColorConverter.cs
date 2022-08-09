@@ -16,9 +16,9 @@ public class StatusToColorConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not Cell.State cellState) throw new InvalidOperationException();
+        if (value is not CellState cellState) throw new InvalidOperationException();
 
-        return cellState == Cell.State.Alive ? new SolidColorBrush(Colors.OrangeRed) : new SolidColorBrush(Colors.Gray);
+        return cellState == CellState.Alive ? new SolidColorBrush(Colors.OrangeRed) : new SolidColorBrush(Colors.Gray);
     }
 
 

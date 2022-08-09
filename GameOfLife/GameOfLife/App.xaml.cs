@@ -4,8 +4,6 @@
 // Created on: 20220805
 // -----------------------------------------------
 
-using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using GameOfLife.Model;
 using GameOfLife.View;
@@ -29,23 +27,15 @@ public partial class App
     ///     3. Any live cell with more than three live neighbours dies, as if by overpopulation.
     ///     4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
     /// </summary>
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private void OnStartup(object sender, StartupEventArgs e)
     {
-        Pattern pattern = new("2-engine Cordership", 41, 49, 20, @"
-19b2o$19b4o$19bob2o2$20bo$19b2o$19b3o$21bo$33b2o$33b2o7$36bo$35b2o$34b
-o3bo$35b2o2bo$40bo$37bobo$38bo$38bo$38b2o$38b2o3$13bo10bo$12b5o5bob2o
-11bo$11bo10bo3bo9bo$12b2o8b3obo9b2o$13b2o9b2o12bo$2o13bo21b3o$2o35b3o
-7$8b2o$8b2o11b2o$19b2o2bo$24bo3bo$18bo5bo3bo$19bo2b2o3bobo$20b3o5bo$
-28bo!", new Uri("https://conwaylife.com/patterns/2enginecordership.rle"));
-
-        Map          newMap       = new(pattern);
-        MapViewModel mapViewModel = new(newMap);
+        MapViewModel mapViewModel = new(new Map(PatternLib.Patterns["Ramon"]));
 
         MainWindow mainWindow = new()
         {
             DataContext = mapViewModel
         };
+
         mainWindow.Show();
     }
 }

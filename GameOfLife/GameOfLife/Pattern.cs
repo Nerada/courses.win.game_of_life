@@ -13,7 +13,7 @@ namespace GameOfLife;
 
 public class Pattern
 {
-    public Pattern(string name, int columns, int rows, int margin, string content, Uri source)
+    public Pattern(string name, int columns, int rows, int margin, string content, Uri? source = null)
     {
         Info    = new MetaData(name, source);
         Content = content.ToMap(columns, margin);
@@ -27,7 +27,7 @@ public class Pattern
 
     public int Rows { get; }
 
-    public IReadOnlyList<Cell> Content { get; }
+    public IReadOnlyList<BaseCell> Content { get; }
 
-    public record MetaData(string Name, Uri Url);
+    public record MetaData(string Name, Uri? Url);
 }

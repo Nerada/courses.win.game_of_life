@@ -12,51 +12,53 @@ namespace GameOfLife.Model;
 
 public class Cell
 {
-    public enum State
-    {
-        Unknown,
-        Alive,
-        Dead
-    }
+    private readonly BaseCell _baseCell;
 
     private readonly List<Cell> _neighbors = new(8);
 
-    private State _nextState;
+    private CellState _nextState;
 
-    public Cell(Location location, State status)
+    public Cell(BaseCell baseCell)
     {
-        Location = location;
-        Status   = status;
+        _baseCell = baseCell;
+        State     = _baseCell.State;
+        Location  = _baseCell.Location;
     }
 
     public Location Location { get; }
 
     public bool Changed { get; private set; }
 
-    public State Status { get; private set; }
+    public CellState State { get; private set; }
 
     public void MoveOn()
     {
-        if (_nextState == State.Unknown) throw new InvalidOperationException();
+        if (_nextState == CellState.Unknown) throw new InvalidOperationException();
 
-        Changed = Status != _nextState;
+        Changed = State != _nextState;
 
-        Status     = _nextState;
-        _nextState = State.Unknown;
+        State      = _nextState;
+        _nextState = CellState.Unknown;
     }
 
-    public void PrepareNextState() => _nextState = _neighbors.Count(n => n.Status == State.Alive) switch
+    public void PrepareNextState() => _nextState = _neighbors.Count(n => n.State == CellState.Alive) switch
     {
-        < 2 => State.Dead,
-        > 3 => State.Dead,
-        3   => State.Alive,
-        _   => Status
+        < 2 => CellState.Dead,
+        > 3 => CellState.Dead,
+        3   => CellState.Alive,
+        _   => State
     };
 
     public void SetNeighbors(IReadOnlyList<Cell> neighbors)
     {
         _neighbors.Clear();
         _neighbors.AddRange(neighbors);
+        PrepareNextState();
+    }
+
+    public void ResetCell()
+    {
+        State = _baseCell.State;
         PrepareNextState();
     }
 }

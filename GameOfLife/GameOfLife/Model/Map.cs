@@ -18,11 +18,11 @@ public class Map
 
     public Map(Pattern layout)
     {
-        _cells = layout.Content.ToList();
+        _cells = layout.Content.Select(bs => new Cell(bs)).ToList();
 
         Pattern = layout;
 
-        foreach (Cell cell in _cells) { cell.SetNeighbors(CalculateNeighbors(cell.Location)); }
+        Parallel.ForEach(_cells, cell => { cell.SetNeighbors(CalculateNeighbors(cell.Location)); });
     }
 
     public IReadOnlyList<Cell> Cells => _cells;
@@ -41,6 +41,8 @@ public class Map
             Parallel.ForEach(_cells, c => c.PrepareNextState());
         });
     }
+
+    public void Reset() => _cells.ForEach(c => c.ResetCell());
 
     private IReadOnlyList<Cell> CalculateNeighbors(Location location)
     {

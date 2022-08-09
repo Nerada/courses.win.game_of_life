@@ -12,11 +12,11 @@ namespace GameOfLife.Extensions;
 
 public static class MapExtensions
 {
-    public static List<Cell> ToMap(this string pointString, int columns, int margin)
+    public static List<BaseCell> ToMap(this string pointString, int columns, int margin)
     {
         pointString = pointString.ReplaceLineEndings(string.Empty);
 
-        List<Cell> map = new();
+        List<BaseCell> map = new();
 
         int charIndex     = 0;
         int currentColumn = 0;
@@ -91,24 +91,24 @@ public static class MapExtensions
         for (int i = 0; i < repeatCount; i++) { action(); }
     }
 
-    private static List<Cell> CreateMultiple(int columnStartIndex, int rowStartIndex, int columnAmount, int rowAmount = 1, Cell.State state = Cell.State.Dead)
+    private static List<BaseCell> CreateMultiple(int columnStartIndex, int rowStartIndex, int columnAmount, int rowAmount = 1, CellState state = CellState.Dead)
     {
-        List<Cell> cellList = new();
+        List<BaseCell> cellList = new();
 
         for (int rowIndex = rowStartIndex; rowIndex < rowStartIndex + rowAmount; rowIndex++)
         {
-            for (int columnIndex = columnStartIndex; columnIndex < columnStartIndex + columnAmount; columnIndex++) { cellList.Add(new Cell(new Location(columnIndex, rowIndex), state)); }
+            for (int columnIndex = columnStartIndex; columnIndex < columnStartIndex + columnAmount; columnIndex++) { cellList.Add(new BaseCell(new Location(columnIndex, rowIndex), state)); }
         }
 
 
         return cellList;
     }
 
-    private static Cell.State ToState(this char character) =>
+    private static CellState ToState(this char character) =>
         character switch
         {
-            'b' => Cell.State.Dead,
-            'o' => Cell.State.Alive,
+            'b' => CellState.Dead,
+            'o' => CellState.Alive,
             _   => throw new InvalidOperationException()
         };
 }

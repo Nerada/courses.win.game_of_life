@@ -13,21 +13,26 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
-            <TextBlock Margin="10, 0,10,0">
-                <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="{Binding PatternUri}">
-                    <Run Text="{Binding PatternName, Mode=OneWay}" />
-                </Hyperlink>
-            </TextBlock>
-        </StackPanel>
+
+        <TextBlock Grid.Row="0" Margin="10, 0,10,0">
+            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="{Binding PatternUri}">
+                <Run Text="{Binding PatternName, Mode=OneWay}" />
+            </Hyperlink>
+        </TextBlock>
+
         <view:ViewerUserControl Grid.Row="1" DataContext="{Binding Mode=OneWay}" Margin="10" HorizontalAlignment="Left"
                                 VerticalAlignment="Top" />
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <Button Height="50" Width="100" Command="{Binding IncreaseIteration}" HorizontalAlignment="Left"
+
+        <ComboBox Grid.Row="2" ItemsSource="{Binding Patterns}" DisplayMemberPath="Info.Name" Margin="10,0,10,10"
+                  SelectedItem="{Binding CurrentPattern}" />
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <Button Height="50" Width="100" Command="{Binding IncreaseIteration}"
                     Content="Add iteration" Margin="10,0,10,10" />
-            <Button Height="50" Width="100" Command="{Binding ToggleAutoRun}" HorizontalAlignment="Left"
-                    Content="Toggle Autorun" Margin="10,0,10,10" />
+            <Button Height="50" Width="100" Command="{Binding ToggleAutoRun}"
+                    Content="Toggle Autorun" Margin="0,0,10,10" />
         </StackPanel>
     </Grid>
 </Window>
