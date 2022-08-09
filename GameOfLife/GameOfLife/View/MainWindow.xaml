@@ -17,7 +17,11 @@
         <TextBlock Text="{Binding PatternName}" Margin="10, 0,10,0" />
         <view:ViewerUserControl Grid.Row="1" DataContext="{Binding Mode=OneWay}" Margin="10" HorizontalAlignment="Left"
                                 VerticalAlignment="Top" />
-        <Button Grid.Row="2" Height="50" Width="100" Command="{Binding IncreaseIteration}" HorizontalAlignment="Left"
-                Content="Add iteration" Margin="10,0,10,10" />
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Height="50" Width="100" Command="{Binding IncreaseIteration}" HorizontalAlignment="Left"
+                    Content="Add iteration" Margin="10,0,10,10" />
+            <Button Height="50" Width="100" Command="{Binding ToggleAutoRun}" HorizontalAlignment="Left"
+                    Content="Toggle Autorun" Margin="10,0,10,10" />
+        </StackPanel>
     </Grid>
 </Window>
