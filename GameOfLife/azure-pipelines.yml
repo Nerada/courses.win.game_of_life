@@ -28,3 +28,4 @@ stages:
     parameters:
       solutionName: 'GameOfLife'
       version: '0.1.0.$(Build.BuildId)'
+      containsTests: 'false'
