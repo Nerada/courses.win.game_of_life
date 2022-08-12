@@ -1,5 +1,5 @@
 # Game of Life [![Build Status](https://dev.azure.com/nerada/GitHub_Public/_apis/build/status/Nerada.katas.win.game_of_life?branchName=master)](https://dev.azure.com/nerada/GitHub_Public/_build/latest?definitionId=24&branchName=master)
-Practicing coding with the team.
+Practicing coding.
 
 ## Details
 https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
@@ -10,6 +10,9 @@ The universe of the Game of Life is an infinite, two-dimensional orthogonal grid
 2. Any live cell with two or three live neighbours lives on to the next generation.
 3. Any live cell with more than three live neighbours dies, as if by overpopulation.
 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+
+#### Result<br/>
+<img src="GameOfLife.gif" />
 
 ### ChangeLog
 0.1.0 First working version<br />
