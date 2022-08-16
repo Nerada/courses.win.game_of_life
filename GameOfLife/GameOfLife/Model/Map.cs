@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GameOfLife.Extensions;
+using GameOfLife.ViewModels;
 
 namespace GameOfLife.Model;
 
@@ -16,13 +17,22 @@ public class Map
 {
     private readonly List<Cell> _cells;
 
-    public Map(Pattern layout)
+    public Map(Pattern layout, Progress progress)
     {
         _cells = layout.Content.Select(bs => new Cell(bs)).ToList();
 
         Pattern = layout;
 
-        Parallel.ForEach(_cells, cell => { cell.SetNeighbors(CalculateNeighbors(cell.Location)); });
+        List<Cell[]> cellGroup = _cells.Chunk(1000).ToList();
+
+        Parallel.ForEach(cellGroup, cells =>
+        {
+            foreach (Cell cell in cells)
+            {
+                progress.IncreaseValue(progress.Max / _cells.Count);
+                cell.SetNeighbors(CalculateNeighbors(cell.Location));
+            }
+        });
     }
 
     public IReadOnlyList<Cell> Cells => _cells;

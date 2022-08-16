@@ -7,6 +7,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -23,18 +25,21 @@ public class MapViewModel : ViewModelBase
     private Map     _map;
     private Pattern _currentPattern;
 
-    public MapViewModel(Map map)
+    public MapViewModel(Map map, Progress progress)
     {
         IncreaseIteration = new DelegateCommand(Iterate);
         ToggleAutoRun     = new DelegateCommand(AutoRun);
 
         _currentPattern = map.Pattern;
 
-        _map = map;
+        _map     = map;
+        Progress = progress;
         SetMap(map);
 
         _dispatcherTimer.Interval =  new TimeSpan(0, 0, 0, 0, 10);
         _dispatcherTimer.Tick     += (_, _) => Iterate();
+
+        progress.ValueChanged += OnProgressValueChanged;
     }
 
     public IReadOnlyList<Pattern> Patterns => PatternLib.Patterns.Values.ToList();
@@ -42,6 +47,8 @@ public class MapViewModel : ViewModelBase
     public int Width => _map.Pattern.Columns * 5;
 
     public int Height => _map.Pattern.Rows * 5;
+
+    public Progress Progress { get; }
 
     public string PatternName => @$"{_map.Pattern.Info.Name} ({_map.Iteration})";
 
@@ -60,11 +67,28 @@ public class MapViewModel : ViewModelBase
         {
             if (!Set(ref _currentPattern, value)) return;
 
-            SetMap(new Map(CurrentPattern));
+            Progress.Reset();
 
-            RaiseAllPropertyChanged();
+            CreateNewMap();
         }
     }
+
+    private void CreateNewMap()
+    {
+        Task<Map> newMapTask = Task.Run(() => new Map(CurrentPattern, Progress));
+
+        newMapTask.ContinueWith(newMap =>
+        {
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                SetMap(newMap.Result);
+
+                RaiseAllPropertyChanged();
+            }));
+        });
+    }
+
+    private void OnProgressValueChanged() => RaisePropertyChanged(nameof(Progress));
 
     private void SetMap(Map map)
     {

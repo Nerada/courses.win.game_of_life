@@ -29,7 +29,9 @@ public partial class App
     /// </summary>
     private void OnStartup(object sender, StartupEventArgs e)
     {
-        MapViewModel mapViewModel = new(new Map(PatternLib.Patterns["Ramon"]));
+        Progress progress = new();
+
+        MapViewModel mapViewModel = new(new Map(PatternLib.Patterns["Ramon"], progress), progress);
 
         MainWindow mainWindow = new()
         {
