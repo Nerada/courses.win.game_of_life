@@ -16,10 +16,10 @@ public static class PatternLib
     public static readonly IReadOnlyDictionary<string, Pattern> Patterns = new Dictionary<string, Pattern>
     {
         {
-            "Ramon", new Pattern("Ramon", 27, 8, 10, @"
-            4o$o3bo$o3bo2b3o2b2ob2o2b2o3b3o$o3bo4bobo2bobobo2bobo2bo$
-            4o3b3obo2bobobo2bobo2bo$o2bo2bo2bobo2bobobo2bobo2bo$
-            o3bobo2bobo2bobobo2bobo2bo$o3bo2b3obo2bobo2b2o2bo2bo!")
+            "Ramon", new Pattern("Ramon", 31, 8, 16, @"
+            4o$o3bo$o3bo3b3o3b2ob2o3b2o4b3o$o3bo5bo2bo2bobo2bo2bo2bo2bo$
+            4o4b3o2bo2bobo2bo2bo2bo2bo$o2bo3bo2bo2bo2bobo2bo2bo2bo2bo$
+            o3bo2bo2bo2bo2bobo2bo2bo2bo2bo$o3bo3b3o2bo2bobo3b2o3bo2bo!")
         },
         {
             "2-engine Cordership", new Pattern("2-engine Cordership", 41, 49, 20, @"

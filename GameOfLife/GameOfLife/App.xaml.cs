@@ -5,7 +5,6 @@
 // -----------------------------------------------
 
 using System.Windows;
-using GameOfLife.Model;
 using GameOfLife.View;
 using GameOfLife.ViewModels;
 
@@ -31,7 +30,7 @@ public partial class App
     {
         Progress progress = new();
 
-        MapViewModel mapViewModel = new(new Map(PatternLib.Patterns["Ramon"], progress), progress);
+        MapViewModel mapViewModel = new(PatternLib.Patterns["Ramon"], progress);
 
         MainWindow mainWindow = new()
         {

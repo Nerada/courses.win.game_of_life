@@ -16,9 +16,9 @@ public class Pattern
     public Pattern(string name, int columns, int rows, int margin, string content, Uri? source = null)
     {
         Info    = new MetaData(name, source);
-        Content = content.ToMap(columns, margin);
         Columns = columns + margin * 2;
         Rows    = rows    + margin * 2;
+        Content = Columns == 0 || Rows == 0 ? new List<BaseCell>() : content.ToMap(columns, margin);
     }
 
     public MetaData Info { get; }

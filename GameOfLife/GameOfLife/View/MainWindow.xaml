@@ -5,10 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:GameOfLife.ViewModels"
         xmlns:view="clr-namespace:GameOfLife.View"
+        xmlns:math="http://hexinnovation.com/math"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:MapViewModel}"
         Title="Game of life" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
     <Grid>
+        <Grid.Resources>
+            <math:MathConverter x:Key="Math" />
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -17,7 +21,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Margin="10,0,10,0">
+        <TextBlock Grid.Row="0" Margin="10,5,10,0">
             <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="{Binding PatternUri, Mode=OneWay}">
                 <Run Text="{Binding PatternName, Mode=OneWay}" />
             </Hyperlink>
@@ -26,15 +30,16 @@
         <ProgressBar Grid.Row="1"
                      Value="{Binding Progress.Value, Mode=OneWay}"
                      Maximum="{Binding Progress.Max, Mode=OneWay}"
-                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                     Foreground="OrangeRed" Height="5" Margin="10,10,10,0" />
+                     Foreground="OrangeRed" Height="5" Margin="10,5,10,0"
+                     Visibility="{Binding Loading, Converter={StaticResource Math}, ConverterParameter='x ? `Visible` : `hidden`' }" />
 
         <view:ViewerUserControl Grid.Row="2" DataContext="{Binding Mode=OneWay}" Margin="10,0,10,10"
                                 HorizontalAlignment="Left"
-                                VerticalAlignment="Top" />
+                                VerticalAlignment="Top" MinWidth="210" MinHeight="100" />
 
         <ComboBox Grid.Row="3" ItemsSource="{Binding Patterns}" DisplayMemberPath="Info.Name" Margin="10,0,10,10"
-                  SelectedItem="{Binding CurrentPattern}" />
+                  SelectedItem="{Binding CurrentPattern}"
+                  IsEnabled="{Binding Loading, Converter={StaticResource Math}, ConverterParameter='!x'}" />
 
         <StackPanel Grid.Row="4" Orientation="Horizontal">
             <Button Height="50" Width="100" Command="{Binding IncreaseIteration}"
