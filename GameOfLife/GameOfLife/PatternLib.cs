@@ -28,6 +28,13 @@ public static class PatternLib
             11bo$11bo10bo3bo9bo$12b2o8b3obo9b2o$13b2o9b2o12bo$2o13bo21b3o$2o35b3o
             7$8b2o$8b2o11b2o$19b2o2bo$24bo3bo$18bo5bo3bo$19bo2b2o3bobo$20b3o5bo$
             28bo!", new Uri("https://conwaylife.com/patterns/2enginecordership.rle"))
+        },
+        {
+            "simkinsp60", new Pattern("simkinsp60", 33, 31, 10, @"
+            22bo$13b2o5b3o$14bo4bo$14bob2o2bo$15bo5bo$16bo3b2o$17bo2$10bo$2o3bo4b
+            2o$2o2b2o5b2o$5b2o4bo$6bo3bo6$22bo3bo$21bo4b2o$20b2o5b2o2b2o$21b2o4bo
+            3b2o$22bo2$15bo$11b2o3bo$11bo5bo$12bo2b2obo$13bo4bo$10b3o5b2o$10bo
+            !", new Uri("https://conwaylife.com/patterns/simkinsp60.rle"))
         }
     };
 }
