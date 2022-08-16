@@ -120,6 +120,7 @@ public class MapViewModel : ViewModelBase
     private void RaiseAllPropertyChanged()
     {
         RaisePropertyChanged(nameof(PatternName));
+        RaisePropertyChanged(nameof(PatternUri));
         RaisePropertyChanged(nameof(Bitmap));
         RaisePropertyChanged(nameof(Width));
         RaisePropertyChanged(nameof(Height));

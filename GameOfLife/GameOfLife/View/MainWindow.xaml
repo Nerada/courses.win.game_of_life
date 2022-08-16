@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Margin="10,0,10,0">
-            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="{Binding PatternUri}">
+            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="{Binding PatternUri, Mode=OneWay}">
                 <Run Text="{Binding PatternName, Mode=OneWay}" />
             </Hyperlink>
         </TextBlock>
