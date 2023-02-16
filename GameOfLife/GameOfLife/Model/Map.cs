@@ -1,7 +1,7 @@
 ﻿// -----------------------------------------------
 //     Author: Ramon Bollen
 //      File: GameOfLife.Map.cs
-// Created on: 20220806
+// Created on: 20221117
 // -----------------------------------------------
 
 using System.Collections.Concurrent;
@@ -52,6 +52,7 @@ public class Map
         });
     }
 
+    // ReSharper disable once UnusedMember.Global
     public void Reset() => _cells.ForEach(c => c.ResetCell());
 
     private IReadOnlyList<Cell> CalculateNeighbors(Location location)

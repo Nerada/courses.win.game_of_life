@@ -1,7 +1,7 @@
 ﻿// -----------------------------------------------
 //     Author: Ramon Bollen
 //      File: GameOfLife.ViewModelBase.cs
-// Created on: 20220807
+// Created on: 20221117
 // -----------------------------------------------
 
 using System.Collections.Concurrent;
@@ -23,6 +23,7 @@ public class ViewModelBase : INotifyPropertyChanged
     /// <summary>
     ///     Indicates if <see cref="PropertyChanged" /> has any subscribers.
     /// </summary>
+    // ReSharper disable once UnusedMember.Global
     protected bool AnyPropertyChangedSubscribers => PropertyChanged != null;
 
     /// <inheritdoc cref="INotifyPropertyChanged.PropertyChanged" />

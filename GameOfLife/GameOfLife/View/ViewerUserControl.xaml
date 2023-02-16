@@ -8,6 +8,7 @@
              d:DataContext="{d:DesignInstance viewModels:MapViewModel}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
+        <!-- ReSharper disable once Xaml.PossibleNullReferenceException -->
         <Image Source="{Binding Bitmap.Source}"
                RenderOptions.BitmapScalingMode="NearestNeighbor"
                SnapsToDevicePixels="True" HorizontalAlignment="Left" VerticalAlignment="Top"
